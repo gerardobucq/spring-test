@@ -1,0 +1,49 @@
+name: Deploy de servidores
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64, aws-ec2]
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Actualizar ServidorCorreo
+        run: |
+          rm -f /home/ubuntu/servidores/servidor-correo/*.jar
+          cp Servidores_Ejecutables/ServidorCorreo-1.0.jar /home/ubuntu/servidores/servidor-correo/
+          sudo systemctl restart servidor-correo
+
+      - name: Actualizar ServidorConfiguracion
+        run: |
+          rm -f /home/ubuntu/servidores/servidor-configuracion/*.jar
+          cp Servidores_Ejecutables/ServidorConfiguracion-2.0.jar /home/ubuntu/servidores/servidor-configuracion/
+          sudo systemctl restart servidor-configuracion
+
+      - name: Actualizar ServidorEureka
+        run: |
+          rm -f /home/ubuntu/servidores/servidor-eureka/*.jar
+          cp Servidores_Ejecutables/ServidorEureka-2.0.jar /home/ubuntu/servidores/servidor-eureka/
+          sudo systemctl restart servidor-eureka
+
+      - name: Actualizar ServidorGateway
+        run: |
+          rm -f /home/ubuntu/servidores/servidor-gateway/*.jar
+          cp Servidores_Ejecutables/ServidorGateway-2.0.jar /home/ubuntu/servidores/servidor-gateway/
+          sudo systemctl restart servidor-gateway
+
+      - name: Actualizar ServidorSeguridad
+        run: |
+          rm -f /home/ubuntu/servidores/servidor-seguridad/*.jar
+          cp Servidores_Ejecutables/ServidorSeguridad-2.0.jar /home/ubuntu/servidores/servidor-seguridad/
+          sudo systemctl restart servidor-seguridad
+
+      - name: Actualizar ServidorSeguridadCuentas
+        run: |
+          rm -f /home/ubuntu/servidores/servidor-seguridadcuentas/*.jar
+          cp Servidores_Ejecutables/ServidorSeguridadCuentas-1.0.0.jar /home/ubuntu/servidores/servidor-seguridadcuentas/
+          sudo systemctl restart servidor-seguridadcuentas
