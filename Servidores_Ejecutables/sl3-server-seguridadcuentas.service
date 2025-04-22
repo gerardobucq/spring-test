@@ -1,11 +1,14 @@
 [Unit]
-Description=Servidor para la Seguridad de las Cuentas
-After=sl3-configuration-server.service sl3-server-eureka.service sl3-server-gateway.service
+Description=SL3 Servidor Seguridad Cuentas
+After=network.target
 
 [Service]
-User=ec2-user
-ExecStart=java -jar /home/ec2-user/Servidores/ServidorSeguridadCuentas-1.0.0.jar
+User=ubuntu
+ExecStart=/usr/bin/java -jar /home/ubuntu/servidores/servidor-seguridadcuentas/ServidorSeguridadCuentas.jar
+Restart=always
 SuccessExitStatus=143
+TimeoutStopSec=10
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

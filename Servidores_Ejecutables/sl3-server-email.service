@@ -1,11 +1,14 @@
 [Unit]
-Description=Servidor para envio de Correos
-After=sl3-configuration-server.service sl3-server-eureka.service sl3-server-gateway.service
+Description=SL3 Servidor de Correo
+After=network.target
 
 [Service]
-User=ec2-user
-ExecStart=/usr/bin/java -jar /mnt/extra-disk/servidores/servidor-correo/ServidorCorreo-1.0.jar
+User=ubuntu
+ExecStart=/usr/bin/java -jar /home/ubuntu/servidores/servidor-correo/ServidorCorreo.jar
+Restart=always
 SuccessExitStatus=143
+TimeoutStopSec=10
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

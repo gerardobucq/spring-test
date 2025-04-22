@@ -12,38 +12,68 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v3
 
-      - name: Actualizar ServidorCorreo
+      # CONFIGURACIÓN
+      - name: Copiar y reiniciar Configuración
         run: |
-          rm -f /home/ubuntu/servidores/servidor-correo/*.jar
-          cp Servidores_Ejecutables/ServidorCorreo-1.0.jar /home/ubuntu/servidores/servidor-correo/
-          sudo systemctl restart servidor-correo
-
-      - name: Actualizar ServidorConfiguracion
-        run: |
+          mkdir -p /home/ubuntu/servidores/servidor-configuracion
           rm -f /home/ubuntu/servidores/servidor-configuracion/*.jar
-          cp Servidores_Ejecutables/ServidorConfiguracion-2.0.jar /home/ubuntu/servidores/servidor-configuracion/
-          sudo systemctl restart servidor-configuracion
+          cp Servidores_Ejecutables/ServidorConfiguracion-2.0.jar /home/ubuntu/servidores/servidor-configuracion/ServidorConfiguracion.jar
+          sudo cp -f Servidores_Ejecutables/sl3-configuration-server.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable sl3-configuration-server.service
+          sudo systemctl restart sl3-configuration-server.service
 
-      - name: Actualizar ServidorEureka
+      # CORREO
+      - name: Copiar y reiniciar Correo
         run: |
+          mkdir -p /home/ubuntu/servidores/servidor-correo
+          rm -f /home/ubuntu/servidores/servidor-correo/*.jar
+          cp Servidores_Ejecutables/ServidorCorreo-1.0.jar /home/ubuntu/servidores/servidor-correo/ServidorCorreo.jar
+          sudo cp -f Servidores_Ejecutables/sl3-server-email.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable sl3-server-email.service
+          sudo systemctl restart sl3-server-email.service
+
+      # EUREKA
+      - name: Copiar y reiniciar Eureka
+        run: |
+          mkdir -p /home/ubuntu/servidores/servidor-eureka
           rm -f /home/ubuntu/servidores/servidor-eureka/*.jar
-          cp Servidores_Ejecutables/ServidorEureka-2.0.jar /home/ubuntu/servidores/servidor-eureka/
-          sudo systemctl restart servidor-eureka
+          cp Servidores_Ejecutables/ServidorEureka-2.0.jar /home/ubuntu/servidores/servidor-eureka/ServidorEureka.jar
+          sudo cp -f Servidores_Ejecutables/sl3-server-eureka.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable sl3-server-eureka.service
+          sudo systemctl restart sl3-server-eureka.service
 
-      - name: Actualizar ServidorGateway
+      # GATEWAY
+      - name: Copiar y reiniciar Gateway
         run: |
+          mkdir -p /home/ubuntu/servidores/servidor-gateway
           rm -f /home/ubuntu/servidores/servidor-gateway/*.jar
-          cp Servidores_Ejecutables/ServidorGateway-2.0.jar /home/ubuntu/servidores/servidor-gateway/
-          sudo systemctl restart servidor-gateway
+          cp Servidores_Ejecutables/ServidorGateway-2.0.jar /home/ubuntu/servidores/servidor-gateway/ServidorGateway.jar
+          sudo cp -f Servidores_Ejecutables/sl3-server-gateway.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable sl3-server-gateway.service
+          sudo systemctl restart sl3-server-gateway.service
 
-      - name: Actualizar ServidorSeguridad
+      # SEGURIDAD
+      - name: Copiar y reiniciar Seguridad
         run: |
+          mkdir -p /home/ubuntu/servidores/servidor-seguridad
           rm -f /home/ubuntu/servidores/servidor-seguridad/*.jar
-          cp Servidores_Ejecutables/ServidorSeguridad-2.0.jar /home/ubuntu/servidores/servidor-seguridad/
-          sudo systemctl restart servidor-seguridad
+          cp Servidores_Ejecutables/ServidorSeguridad-2.0.0.jar /home/ubuntu/servidores/servidor-seguridad/ServidorSeguridad.jar
+          sudo cp -f Servidores_Ejecutables/sl3-server-seguridad.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable sl3-server-seguridad.service
+          sudo systemctl restart sl3-server-seguridad.service
 
-      - name: Actualizar ServidorSeguridadCuentas
+      # SEGURIDAD CUENTAS
+      - name: Copiar y reiniciar Seguridad Cuentas
         run: |
+          mkdir -p /home/ubuntu/servidores/servidor-seguridadcuentas
           rm -f /home/ubuntu/servidores/servidor-seguridadcuentas/*.jar
-          cp Servidores_Ejecutables/ServidorSeguridadCuentas-1.0.0.jar /home/ubuntu/servidores/servidor-seguridadcuentas/
-          sudo systemctl restart servidor-seguridadcuentas
+          cp Servidores_Ejecutables/ServidorSeguridadCuentas-1.0.0.jar /home/ubuntu/servidores/servidor-seguridadcuentas/ServidorSeguridadCuentas.jar
+          sudo cp -f Servidores_Ejecutables/sl3-server-seguridadcuentas.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable sl3-server-seguridadcuentas.service
+          sudo systemctl restart sl3-server-seguridadcuentas.service

@@ -1,11 +1,14 @@
 [Unit]
-Description=Servidor Gateway para redirigir a Microservicios
-After=sl3-configuration-server.service sl3-server-eureka.service
+Description=SL3 Servidor Gateway
+After=network.target
 
 [Service]
-User=ec2-user
-ExecStart=java -jar /home/ec2-user/Servidores/ServidorGateway-2.0.jar
+User=ubuntu
+ExecStart=/usr/bin/java -jar /home/ubuntu/servidores/servidor-gateway/ServidorGateway.jar
+Restart=always
 SuccessExitStatus=143
+TimeoutStopSec=10
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
