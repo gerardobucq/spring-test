@@ -2,7 +2,7 @@ name: Deploy de servidores
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   deploy:
