@@ -10,6 +10,6 @@ public class HolaMundoController {
 
     @GetMapping("/hola")
     public String holaMundo() {
-        return "¡Testear2!";
+        return "¡Testear2!s";
     }
 }
